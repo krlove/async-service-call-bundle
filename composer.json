@@ -1,5 +1,5 @@
 {
-  "name": "krlove/AsyncServiceCallBundle",
+  "name": "krlove/async-service-call-bundle",
   "type": "symfony-bundle",
   "version": "1.0.0",
   "description": "Symfony bundle for asynchronous service methods calls",

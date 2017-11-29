@@ -7,7 +7,7 @@ Installation
 ------------
 Download using composer
 
-`composer require krlove/AsyncServiceCallBundle`
+`composer require krlove/async-service-call-bundle`
 
 Enable the bundle at `AppKernel`
 
