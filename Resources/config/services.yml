@@ -1,0 +1,5 @@
+services:
+    krlove.async:
+        class: Krlove\AsyncServiceCallBundle\AsyncService
+        arguments:
+            - '%kernel.root_dir%'
