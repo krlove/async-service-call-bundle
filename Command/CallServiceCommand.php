@@ -49,7 +49,7 @@ class CallServiceCommand extends ContainerAwareCommand
                 );
             }
 
-            $serviceArgs = unserialize($input->getOption('args'));
+            $serviceArgs = unserialize(base64_decode($input->getOption('args')));
 
             call_user_func_array([$service, $method], $serviceArgs);
         } catch (\Exception $e) {

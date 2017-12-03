@@ -73,7 +73,7 @@ class AsyncService
      */
     protected function createCommandString($service, $method, $arguments)
     {
-        $arguments = escapeshellarg(serialize($arguments));
+        $arguments = escapeshellarg(base64_encode(serialize($arguments)));
 
         return sprintf(
             '%s %s krlove:service:call %s %s --args=%s > /dev/null 2>/dev/null &',
