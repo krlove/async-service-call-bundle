@@ -1,5 +1,3 @@
-(In development -> not stable yet)
-
 AsyncServiceCallBundle
 ========================
 
