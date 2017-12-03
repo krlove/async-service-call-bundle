@@ -2,4 +2,7 @@ services:
     krlove.async:
         class: Krlove\AsyncServiceCallBundle\AsyncService
         arguments:
+            - '@filesystem'
             - '%kernel.root_dir%'
+            - '%krlove_async_service_call.console_path%'
+            - '%krlove_async_service_call.php_path%'

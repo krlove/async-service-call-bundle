@@ -33,21 +33,27 @@ class CallServiceCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $serviceId = $input->getArgument('service');
-        if (!$this->getContainer()->has($serviceId)) {
-            throw new InvalidArgumentException(sprintf('Service %s doesn\'t exist', $serviceId));
+        $logger = $this->getContainer()->get('logger');
+
+        try {
+            $serviceId = $input->getArgument('service');
+            if (!$this->getContainer()->has($serviceId)) {
+                throw new InvalidArgumentException(sprintf('Service %s doesn\'t exist', $serviceId));
+            }
+            $service = $this->getContainer()->get($serviceId);
+
+            $method = $input->getArgument('method');
+            if (!method_exists($service, $method)) {
+                throw new InvalidArgumentException(
+                    sprintf('Method %s doesn\'t exist on class %s', $method, get_class($service))
+                );
+            }
+
+            $serviceArgs = unserialize($input->getOption('args'));
+
+            call_user_func_array([$service, $method], $serviceArgs);
+        } catch (\Exception $e) {
+            $logger->error($e->getMessage());
         }
-        $service = $this->getContainer()->get($serviceId);
-
-        $method = $input->getArgument('method');
-        if (!method_exists($service, $method)) {
-            throw new InvalidArgumentException(
-                sprintf('Method %s doesn\'t exist on class %s', $method, get_class($service))
-            );
-        }
-
-        $serviceArgs = unserialize($input->getOption('args'));
-
-        call_user_func_array([$service, $method], $serviceArgs); // todo log result
     }
 }

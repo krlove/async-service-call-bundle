@@ -4,6 +4,7 @@ namespace Krlove\AsyncServiceCallBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -20,9 +21,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('krlove_async_service_call');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('console_path')
+                    ->defaultValue(Kernel::MAJOR_VERSION < 3 ? 'app/console' : 'bin/console')
+                ->end()
+                ->scalarNode('php_path')
+                    ->defaultValue(null)
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
