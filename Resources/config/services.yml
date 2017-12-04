@@ -1,8 +1,12 @@
 services:
-    krlove.async:
-        class: Krlove\AsyncServiceCallBundle\AsyncService
+    krlove.async.factory:
+        class: Krlove\AsyncServiceCallBundle\AsyncServiceFactory
         arguments:
             - '@filesystem'
             - '%kernel.root_dir%'
             - '%krlove_async_service_call.console_path%'
             - '%krlove_async_service_call.php_path%'
+
+    krlove.async:
+        class: Krlove\AsyncServiceCallBundle\AsyncService
+        factory: 'krlove.async.factory:createAsyncService'
