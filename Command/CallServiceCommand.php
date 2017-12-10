@@ -37,9 +37,6 @@ class CallServiceCommand extends ContainerAwareCommand
 
         try {
             $serviceId = $input->getArgument('service');
-            if (!$this->getContainer()->has($serviceId)) {
-                throw new InvalidArgumentException(sprintf('Service %s doesn\'t exist', $serviceId));
-            }
             $service = $this->getContainer()->get($serviceId);
 
             $method = $input->getArgument('method');
@@ -51,7 +48,11 @@ class CallServiceCommand extends ContainerAwareCommand
 
             $serviceArgs = unserialize(base64_decode($input->getOption('args')));
 
-            call_user_func_array([$service, $method], $serviceArgs);
+            if ($serviceArgs) {
+                call_user_func_array([$service, $method], $serviceArgs);
+            } else {
+                call_user_func([$service, $method]);
+            }
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
         }

@@ -43,10 +43,7 @@ class AsyncService
     {
         $commandline = $this->createCommandString($service, $method, $arguments);
 
-        $process = new Process($commandline);
-        $process->start();
-
-        return $process->getPid();
+        return $this->runProcess($commandline);
     }
 
     /**
@@ -67,5 +64,17 @@ class AsyncService
             $method,
             $arguments
         );
+    }
+
+    /**
+     * @param string $commandline
+     * @return int|null
+     */
+    protected function runProcess($commandline)
+    {
+        $process = new Process($commandline);
+        $process->start();
+
+        return $process->getPid();
     }
 }

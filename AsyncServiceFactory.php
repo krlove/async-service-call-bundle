@@ -6,6 +6,10 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\PhpExecutableFinder;
 
+/**
+ * Class AsyncServiceFactory
+ * @package Krlove\AsyncServiceCallBundle
+ */
 class AsyncServiceFactory
 {
     /**
